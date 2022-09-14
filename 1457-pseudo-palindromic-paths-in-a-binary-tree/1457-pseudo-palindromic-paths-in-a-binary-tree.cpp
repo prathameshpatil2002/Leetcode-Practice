@@ -13,12 +13,10 @@ class Solution {
 public:
     map<int,int>m;
     int ans = 0;
-    int till = 0;
     void paths(TreeNode*root){
         if(root->left==NULL&& root->right==NULL){
             int odd_count = 0,even_count=0,e=0;
             m[root->val]++;
-            till++;
             for(auto it: m){
                 if(it.second%2){
                     odd_count++;
@@ -36,12 +34,11 @@ public:
                 ans++;
             }
             m[root->val]--;
-            till--;
+          
             return;
         }
         
         m[root->val]++;
-        till++;
         
         if(root->left){
             paths(root->left);
@@ -50,7 +47,7 @@ public:
             paths(root->right);
         }
         m[root->val]--;
-        till--;
+        
         return;
 
     }
