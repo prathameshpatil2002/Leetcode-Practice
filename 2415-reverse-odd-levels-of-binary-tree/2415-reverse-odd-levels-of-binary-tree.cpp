@@ -12,6 +12,23 @@
 class Solution {
 public:
     
+    void dfs(TreeNode*l,TreeNode*r,int level){
+        if(!l&&!r){
+            return;
+        }
+        if(level%2){
+            int l1 = l->val;
+            int r1 = r->val;
+            
+            l->val = r1;
+            r->val = l1;
+        }
+        
+        dfs(l->left,r->right,level+1);
+        dfs(l->right,r->left,level+1);
+        
+    }
+    
     void bfs(TreeNode* root){
         queue<TreeNode*>q;
         q.push(root);
@@ -49,7 +66,7 @@ public:
         }
     }
     TreeNode* reverseOddLevels(TreeNode* root) {
-        bfs(root);
+        dfs(root->left,root->right,1);
         return root;
     }
 };
