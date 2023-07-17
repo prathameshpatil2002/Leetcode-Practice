@@ -12,20 +12,27 @@ class Solution
         vector<long long> ret(n);
         
         stack<long long>s;
-        
-        s.push(0);
-        
-        for(int i=1; i<n; i++){
-            while(!s.empty() && arr[s.top()] < arr[i]){
-                ret[s.top()] = arr[i];
-                s.pop();
+        for(int i=n-1; i>=0; i--){
+            if(s.empty()){
+                ret[i] = -1;
+                s.push(arr[i]);
             }
-            s.push(i);
-        }
-        
-        while(!s.empty()){
-            ret[s.top()] = -1;
-            s.pop();
+            else{
+                while(!s.empty()){
+                    if(s.top()<=arr[i]){
+                        s.pop();
+                    }else{
+                        break;
+                    }
+                }
+                if(!s.empty()){
+                    ret[i] = s.top();
+                }
+                else{
+                    ret[i] = -1;
+                }
+                s.push(arr[i]);
+            }
         }
         
         return ret;
