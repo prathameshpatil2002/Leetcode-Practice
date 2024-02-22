@@ -10,9 +10,6 @@ public:
             m[it[0]]++;
         }
         
-        int su = n*(n+1);
-        su/=2;
-        
         for(int i=1; i<=n; i++){
             if(g[i].size()==n-1&&m[i]==0){
                 return i;
