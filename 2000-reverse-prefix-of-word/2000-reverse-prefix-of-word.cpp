@@ -7,8 +7,6 @@ public:
         while(i < n){
             if(ch == word[i]){
                 f = 1;
-                rev = word.substr(0,i+1);
-                rem = word.substr(i+1,n-(i+1));
                 break;
             }
             i++;
@@ -17,8 +15,12 @@ public:
             return word;
         }
        
-        reverse(rev.begin(),rev.end());
-        rev += rem;
-        return rev;
+        int j = 0;
+        while(j<=i){
+            swap(word[i],word[j]);
+            i--;
+            j++;
+        }
+        return word;
     }
 };
