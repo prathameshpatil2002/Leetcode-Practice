@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //O(2^n) approach
     void backtrack(const string& s, const unordered_set<string>& wordSet,
                    string& currentSentence, vector<string>& results,
                    int startIndex) {
