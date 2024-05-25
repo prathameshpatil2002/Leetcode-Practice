@@ -1,38 +1,48 @@
 class Solution {
 public:
-    //O(2^n) approach
-    void backtrack(const string& s, const unordered_set<string>& wordSet,
-                   string& currentSentence, vector<string>& results,
-                   int startIndex) {
-       
-        if (startIndex == s.length()) {
-            results.push_back(currentSentence);
-            return;
-        }
-
-       
-        for (int endIndex = startIndex + 1; endIndex <= s.length();
-             ++endIndex) {
-            string word = s.substr(startIndex, endIndex - startIndex);
-           
-            if (wordSet.find(word) != wordSet.end()) {
-                string originalSentence = currentSentence;
-                if (!currentSentence.empty()) currentSentence += " ";
-                currentSentence += word;
-               
-                backtrack(s, wordSet, currentSentence, results, endIndex);
-                
-                currentSentence = originalSentence;
+   
+    bool isWordInDict(const string& word, const vector<string>& wordDict) {
+        for (const auto& dictWord : wordDict) {
+            if (dictWord == word) {
+                return true;
             }
         }
+        return false;
     }
     vector<string> wordBreak(string s, vector<string>& wordDict) {
+       
+        unordered_map<int, vector<string>> dp;
+
+       
+        for (int startIdx = s.size(); startIdx >= 0; startIdx--) {
+            
+            vector<string> validSentences;
+
+            
+            for (int endIdx = startIdx; endIdx < s.size(); endIdx++) {
+               
+                string currentWord = s.substr(startIdx, endIdx - startIdx + 1);
+
+               
+                if (isWordInDict(currentWord, wordDict)) {
+                   
+                    if (endIdx == s.size() - 1) {
+                        validSentences.push_back(currentWord);
+                    } else {
+                        
+                        vector<string> sentencesFromNextIndex = dp[endIdx + 1];
+                        for (const auto& sentence : sentencesFromNextIndex) {
+                            validSentences.push_back(currentWord + " " +
+                                                     sentence);
+                        }
+                    }
+                }
+            }
+           
+            dp[startIdx] = validSentences;
+        }
         
-        unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
-        vector<string> results;
-        string currentSentence;
-        
-        backtrack(s, wordSet, currentSentence, results, 0);
-        return results;
+        return dp[0];
     }
+    
 };
