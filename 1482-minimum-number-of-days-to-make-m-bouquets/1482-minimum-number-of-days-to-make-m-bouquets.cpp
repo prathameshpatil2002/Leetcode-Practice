@@ -23,7 +23,7 @@ public:
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n = bloomDay.size();  
         
-        long long l = 0,r = *max_element(bloomDay.begin(),bloomDay.end());
+        long long l = *min_element(bloomDay.begin(),bloomDay.end()),r = *max_element(bloomDay.begin(),bloomDay.end());
         long long ans = -1;
         while(l<=r){
             long long mid = (r+l)/2;
